@@ -1,12 +1,16 @@
-package com.example.mybatis.dto.res;
+package com.example.mybatis.dto.req;
 
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
-public class boardResponse {
+@Setter
+@Builder
+public class BoardRequest {
 
     private Long boardId;
     private String boardTitle;
@@ -17,7 +21,7 @@ public class boardResponse {
 
     private String boardWriter;
 
-    private String isComment;
+    private String boardIsComment;
 
     private LocalDateTime createDate;
 

@@ -1,15 +1,14 @@
-package com.example.mybatis.dto.req;
+package com.example.mybatis.dto.res;
 
-import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
-@Builder
-public class userRequest {
+public class UserResponse {
+
+    private String userId;
+
     private String userEmail;
 
     private String userPassWord;
@@ -19,6 +18,4 @@ public class userRequest {
     private String userRole;
 
     private LocalDateTime userRegDate;
-
-
 }

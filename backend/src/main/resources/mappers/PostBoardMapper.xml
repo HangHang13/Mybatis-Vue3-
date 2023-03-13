@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mybatis.mapper.PostBoardMapper">
+
+    <!-- tb_post 테이블 전체 컬럼 -->
+    <sql id="postColumns">
+        board_id
+        , board_title
+        , board_type
+        , board_content
+        , board_writer
+        , board_isComment
+        , user_id
+    </sql>
+
+
+    <!-- 게시글 저장 -->
+    <insert id="save" parameterType="com.example.mybatis.dto.req.BoardRequest">
+        INSERT INTO board (
+        <include refid="postColumns" />
+        ) VALUES (
+        #{boardId}
+        , #{boardTitle}
+        , #{boardType}
+        , #{boardContent}
+        , #{boardWriter}
+        , #{boardIsComment}
+        , #{userId}
+        )
+    </insert>
+
+
+    <!-- 게시글 상세정보 조회 -->
+    <select id="findById" parameterType="long" resultType="com.example.mybatis.dto.res.BoardResponse">
+        SELECT
+        <include refid="postColumns" />
+        FROM
+        board
+        WHERE
+        boardId = #{boardId}
+    </select>
+
+
+    <!-- 게시글 수정 -->
+    <update id="update" parameterType="com.example.mybatis.dto.req.BoardRequest">
+        UPDATE tb_post
+        SET
+        modified_date = NOW()
+        , boardTitle = #{boardTitle}
+        , boardContent = #{boardContent}
+        , boardWriter = #{boardWriter}
+        , boardType = #{boardType}
+        , userId = #{userId}
+        WHERE
+        id = #{id}
+    </update>
+
+
+    <!-- 게시글 삭제 -->
+    <delete id="deleteById" parameterType="long">
+        DELETE board
+        WHERE
+        boardId = #{boardId
+    </delete>
+    <!-- 게시글 리스트 조회 -->
+    <select id="findAll" resultType="com.example.mybatis.dto.res.BoardResponse">
+        SELECT
+        <include refid="postColumns" />
+        FROM
+        board
+        ORDER BY
+        board_id DESC
+    </select>
+</mapper>
