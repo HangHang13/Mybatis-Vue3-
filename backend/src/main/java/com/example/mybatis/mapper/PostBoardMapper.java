@@ -4,6 +4,7 @@ import com.example.mybatis.dto.req.BoardRequest;
 import com.example.mybatis.dto.res.BoardResponse;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
