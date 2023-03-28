@@ -1,44 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.mybatis.mapper.PostBoardMapper">
+<mapper namespace="com.example.mybatis.mapper.PostUserMapper">
 
     <!-- tb_post 테이블 전체 컬럼 -->
     <sql id="postColumns">
-        board_id
-        , board_title
-        , board_type
-        , board_content
-        , board_writer
-        , board_iscomment
-        , user_id
+        user_id
+        , user_email
+        , user_password
+        , user_name
+        , user_role
+        , user_regdate
     </sql>
 
 
-    <!-- 게시글 저장 -->
-    <insert id="save" parameterType="com.example.mybatis.dto.req.BoardRequest">
-        INSERT INTO board (
+    <!-- 유저 생성 -->
+    <insert id="save" parameterType="com.example.mybatis.dto.req.UserRequest">
+        INSERT INTO user (
         <include refid="postColumns" />
         ) VALUES (
-        #{boardId}
-        , #{boardTitle}
-        , #{boardType}
-        , #{boardContent}
-        , #{boardWriter}
-        , #{boardIsComment}
-        , #{userId}
+        #{userId}
+        , #{userEmail}
+        , #{userPassword}
+        , #{userName}
+        , #{userRole}
+        , #{userRegDate}
         )
     </insert>
 
 
-    <!-- 게시글 상세정보 조회 -->
-    <select id="findById" parameterType="long" resultType="com.example.mybatis.dto.res.BoardResponse">
+    <!-- 유저정보 상세정보 조회 -->
+    <select id="findByUserEmail" parameterType="String" resultType="com.example.mybatis.dto.res.UserResponse">
         SELECT
         <include refid="postColumns" />
         FROM
-        board
+        user
         WHERE
-        board_id = #{boardId}
+        user_email = #{userEmail}
     </select>
 
 
@@ -63,7 +61,7 @@
         WHERE
         board_id = #{boardId}
     </delete>
-<!--    "com.example.mybatis.dto.res.BoardResponse"-->
+    <!--    "com.example.mybatis.dto.res.BoardResponse"-->
     <!-- 게시글 리스트 조회 -->
     <select id="findAll" resultType="com.example.mybatis.dto.res.BoardResponse" parameterType="String">
         SELECT

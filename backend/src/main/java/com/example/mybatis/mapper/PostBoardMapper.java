@@ -3,11 +3,12 @@ package com.example.mybatis.mapper;
 import com.example.mybatis.dto.req.BoardRequest;
 import com.example.mybatis.dto.res.BoardResponse;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Mapper
+@Repository
 public interface PostBoardMapper {
 
     /**
