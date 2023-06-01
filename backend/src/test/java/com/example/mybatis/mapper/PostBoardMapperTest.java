@@ -3,6 +3,7 @@ package com.example.mybatis.mapper;
 import com.example.mybatis.dto.req.BoardRequest;
 import com.example.mybatis.dto.res.BoardResponse;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,34 @@ class PostBoardMapperTest {
     @Autowired
     PostBoardMapper postBoardMapper;
 
+    @BeforeEach
+    void createPost(){
+        BoardRequest res1 = BoardRequest.builder()
+                .boardContent("김진행입니다.")
+                .boardTitle("안녕하세요")
+                .boardWriter("김진행")
+                .boardType("NOTICE")
+                .userId("3c1f4031-8323-47d9-bc30-db1e1a658e38")
+                .build();
+
+        postBoardMapper.save(res1);
+
+
+        BoardRequest res2 = BoardRequest.builder()
+                .boardContent("김진행입니다.")
+                .boardTitle("안녕하세요")
+                .boardWriter("김진행")
+                .boardType("NOTICE")
+                .userId("3c1f4031-8323-47d9-bc30-db1e1a658e38")
+                .build();
+
+        postBoardMapper.save(res2);
+
+        System.out.println("before Each");
+    }
+
+
+
     @Test
     @DisplayName("게시글을 생성해야 한다.")
     void postBoard(){
@@ -24,7 +53,7 @@ class PostBoardMapperTest {
                 .boardTitle("안녕하세요")
                 .boardWriter("김진행")
                 .boardType("NOTICE")
-                .userId(1L)
+                .userId("3c1f4031-8323-47d9-bc30-db1e1a658e38")
                 .build();
 
         postBoardMapper.save(res);
@@ -52,7 +81,7 @@ class PostBoardMapperTest {
                 .boardType("NOTICE")
                 .boardIsComment("OFF")
                 .boardContent("김진행")
-                .userId(1L)
+                .userId("3c1f4031-8323-47d9-bc30-db1e1a658e38")
                 .build();
         postBoardMapper.update(req);
 

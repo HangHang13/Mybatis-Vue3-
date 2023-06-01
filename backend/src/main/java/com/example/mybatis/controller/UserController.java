@@ -3,6 +3,9 @@ package com.example.mybatis.controller;
 import com.example.mybatis.dto.req.LoginRequestDTO;
 import com.example.mybatis.dto.res.LoginResponseDTO;
 import com.example.mybatis.service.UserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +23,11 @@ public class UserController {
     private final UserService userService;
 
     // 로그인 요청 처리
+    @ApiOperation(value = "userJoin", notes = "로그인 요청 처리")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK~!"),
+            @ApiResponse(code = 404, message = "page not found!!!")
+    })
     @PostMapping("/user/join")
     public ResponseEntity<?> join(
             @Validated @RequestBody

@@ -6,6 +6,10 @@ import com.example.mybatis.dto.res.ResponseEntityDTO;
 import com.example.mybatis.mapper.PostBoardMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,21 +24,19 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @RestController
 @Slf4j
+@Api(value = "BoardController")
 public class BoardController {
 
     @Autowired
     private PostBoardMapper postBoardMapper;
 
-
-
-//    @GetMapping("/board")
-//    public ResponseEntityDTO<?> getList(){
-////        List<HashMap> list = postBoardMapper.findAll();
-////        list.stream().map(BoardResponse::new);
-//        List<BoardResponse> list = postBoardMapper.findAll();
-//        return new ResponseEntityDTO(200,"게시물 조회 성공",list);
-//    }
     //게시글 전체조회
+
+    @ApiOperation(value = "board", notes = "게시글 전체조회")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK~!"),
+            @ApiResponse(code = 404, message = "page not found!!!")
+    })
     @GetMapping("/board")
     public PageInfo<BoardResponse> findPage(HttpServletRequest request){
         PageHelper.startPage(request);
@@ -42,15 +44,25 @@ public class BoardController {
     }
 
     //게시글 상세조회
+    @ApiOperation(value = "boardDetail", notes = "게시글 상세조회")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK~!"),
+            @ApiResponse(code = 404, message = "page not found!!!")
+    })
     @GetMapping("/board/{board_id}")
     public ResponseEntityDTO<?> getBoard(@PathVariable("board_id") Long boardId){
         BoardResponse res = postBoardMapper.findById(boardId);
         if (res == null){
-            return new ResponseEntityDTO(400,"해당 게시글이 없습니다.",res);
+            return new ResponseEntityDTO<>(400,"해당 게시글이 없습니다.",res);
         }
-        return new ResponseEntityDTO(200,"게시물 상세조회 성공",res);
+        return new ResponseEntityDTO<>(200,"게시물 상세조회 성공",res);
     }
     //게시글 작성
+    @ApiOperation(value = "postBoard", notes = "게시글 작성")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK~!"),
+            @ApiResponse(code = 404, message = "page not found!!!")
+    })
     @PostMapping("/board")
     public ResponseEntityDTO<?> postBoard(
             @AuthenticationPrincipal String userId,
@@ -73,23 +85,20 @@ public class BoardController {
         postBoardMapper.save(result);
         return new ResponseEntityDTO(200,"게시물 작성에 성공했습니다.",null);
     }
-
+    @ApiOperation(value = "deleteBoard", notes = "게시글 삭제")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK~!"),
+            @ApiResponse(code = 404, message = "page not found!!!")
+    })
     @DeleteMapping("/board/{board_id}")
     public ResponseEntityDTO<?> deleteBoard(
             @AuthenticationPrincipal String userId,
             @PathVariable("board_id") Long boardId
-
     ){
         BoardResponse res = postBoardMapper.findById(boardId);
         System.out.println("res " + res.getUserId());
         System.out.println("userId " + userId);
 
-        if (res.getUserId().equals(userId)){
-            System.out.println("맞음");
-        }
-        else {
-            System.out.println("틀림");
-        }
         if (res == null){
             return new ResponseEntityDTO(400, "해당 게시글이 없습니다", null);
         }
