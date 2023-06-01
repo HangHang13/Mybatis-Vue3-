@@ -21,7 +21,7 @@
 - 전통적인 웹 방식은 새로운 페이지를 요청할 때 마다 정적 리소스가 다운로드 되고, 전체 페이지를 다시 렌더링함.
 - 이는 변경이 필요없는 부분까지도 렌더링하여 비효율적
 
-![image-20230601181724346](C:\Users\kim\Desktop\공부\pjt\assets\image-20230601181724346.png)
+![image-20230601181724346](https://github.com/HangHang13/Mybatis-Vue3-/assets/82326116/2d8477be-41c7-419a-8f08-801ca2c3a510)
 
 
 
