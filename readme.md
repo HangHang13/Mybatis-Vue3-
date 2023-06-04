@@ -60,3 +60,96 @@
 - `var` 변수는 범위 내에서 업데이트 및 재선언할 수 있다. `let` 변수는 업데이트할 수 있지만, 재선언은 할 수 없다. `const` 변수는 업데이트와 재선언 둘 다 불가능하다.
 - 세 가지 모두 최상위로 호이스팅된다. 하지만 `var` 변수만 `undefined(정의되지 않음)`으로 초기화되고 `let`과 `const` 변수는 초기화되지 않는다.
 - `var`와 `let`은 초기화하지 않은 상태에서 선언할 수 있지만, `const`는 선언 중에 초기화해야한다.
+
+
+
+
+
+## Vue 연결
+
+```html
+<section id="user-goal">
+      <h2>My Course Goal</h2>
+      <p></p>
+</section>
+```
+
+```js
+const app = Vue.creatApp();
+
+app.mount('#user-goal');
+```
+
+
+
+
+
+## Vue 내부 들여다보기
+
+
+
+### 프록시
+
+```js
+let message = 'Hello'
+
+let longMessage = message + 'World'
+
+console.log(longMessage) // Hello World
+
+let mesasge = 'Hello!!!!'
+
+console.log(longMessage) // Hello World
+
+/자바스크립트는 반응형이 아니다.
+```
+
+```js
+const data ={
+  message: 'Hello!',
+  longMessage: 'Hello! World!'
+};
+
+const handler = {
+  set(target, key, value){
+    console.log(target)
+    console.log(key)
+    console.log(value)
+  }
+}
+
+const proxy = new Proxy(data, handler);
+
+proxy.message = 'Hello!!!!!'
+
+//{message: 'Hello!', longMessage: 'Hello! World!'}
+//message
+//Hello!!!!!
+/Vue는 이러한 프록시를 내장하여 반응형 변수를 만든다.
+```
+
+
+
+### 나누기
+
+```html
+ <body>
+    <section id="app">
+    </section>
+    <section id="app2">
+    </section>
+  </body>
+```
+
+
+
+```js
+const app = Vue.createApp()
+app.mount('#app');
+
+const app2 = Vue.createApp();
+app.mount('#app2')
+```
+
+
+
