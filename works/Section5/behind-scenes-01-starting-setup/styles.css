@@ -22,7 +22,7 @@ header {
   max-width: 40rem;
 }
 
-#app {
+#app, #app2 {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   margin: 3rem auto;
   border-radius: 10px;
@@ -39,7 +39,7 @@ header {
   margin: 0 0 1rem 0;
 }
 
-#app p {
+#app p, #app2 p {
   font-size: 1.25rem;
   font-weight: bold;
   border: 1px solid #4fc08d;
