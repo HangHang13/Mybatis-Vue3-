@@ -153,3 +153,41 @@ app.mount('#app2')
 
 
 
+## Vue LifeCycle
+
+```js
+const app = Vue.createApp({
+  
+  beforeCreate(){
+    console.log('beforeCreate()')
+  },//화면이 마운트되기전
+  created(){
+    console.log('created()')
+  },//화면이 마운트되기전
+  beforeMount(){
+    console.log('beforeMount()')
+  },//화면이 마운트되기전
+    
+    //=========화면에서 보임
+  mounted(){
+    console.log('mounted()')
+  },//화면이 마운트되고난후
+    
+    
+  beforeUpdate(){
+    console.log('beforeUpdate()')
+  },//dom이 변화하기 전
+  updated(){
+    console.log('updated()')
+  },//dom이 변화하고 난 후
+    
+    
+  beforeUnmount(){
+    console.log('beforeUnmount()')
+  },//dom이 unmount되기전
+  unmounted(){
+    console.log('unmounted()')
+  }//dom이 unmount되고난 후
+});
+```
+
