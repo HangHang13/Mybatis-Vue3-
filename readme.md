@@ -130,7 +130,7 @@ proxy.message = 'Hello!!!!!'
 
 
 
-### 나누기
+### 하나의 앱 vs 여러개의 앱
 
 ```html
  <body>
@@ -150,6 +150,123 @@ app.mount('#app');
 const app2 = Vue.createApp();
 app.mount('#app2')
 ```
+
+
+
+### 템플릿 이해하기
+
+```js
+const app2 = Vue.createApp({
+  template : `<p>{{ favoriteMeal }}</p>`,
+  data(){
+    return {
+      favoriteMeal: 'Pizza'
+    }
+  }
+});
+app2.mount('#app2')
+```
+
+- 이런식으로 템플릿을 내보낼 수 있음.
+- 다만 가독성이 떨어짐
+
+
+
+### Ref 활용하기
+
+- ref 속성은 기본 HTML 속성이 아님
+- Vue는 ref를 감지하고 내부에 이를 저장함
+- 받을때는 $ 를 사용하면 내장 프로퍼티를 감지함
+
+```html
+    <section id="app">
+      <h2>How Vue Works</h2>
+      <input type="text" ref="userText">
+      <button @click="setText">Set Text</button>
+      <p>{{ message }}</p>
+    </section>
+```
+
+
+
+```js
+const app = Vue.createApp({
+  data() {
+    return {
+      currentUserInput: '',
+      message: 'Vue is great!',
+    };
+  },
+  methods: {
+    saveInput(event) {
+      this.currentUserInput = event.target.value;
+    },
+    setText() {
+      //this.message = this.currentUserInput;
+      this.message = this.$refs.userText
+    },
+  },
+});
+```
+
+
+
+###  Vue 가 DOM을 업데이트 하는 방법
+
+- 인풋에 값을 넣고 변경했을 때 페이지 전부가 렌더링 되는 것이 아니라 해당 부분만 변경됨
+- 이는 Vue가 DOM을 업데이트 하는 방식에 따른 것임
+- Vue는 가상 DOM을 생성하고, 이를 메모리에서 업데이트하는 것이 실제 DOM을 업데이트 하는 것보다 효율적임
+
+- 순서
+
+1. 텍스트가 변경
+2. Vue가 해당 텍스트 변경 사항을 감지
+3. 새로운 가상 DOM을 생성해서 기존 가상 DOM과 비교
+4. 변화를 감지한 부분을 변화가 감지된 실제 DOM에 업데이트 함
+
+
+
+- 최적화 방식에는 여러가지가 있음 이는 그 중 하나
+
+
+
+### Vue LifeCycle
+
+1. `createApp({....})`
+2. `beforeCreate()`
+3. `created()`
+
+(이 이후에 Vue가 프로퍼티를 인식)
+
+4. `Compile template`
+   - 모든 동적 플레이스 홀더와 보간 등이 제거된 후 사용자에게 표시될 구체적인 값으로 대체되는 단계
+5. `beforeMount() `
+   - 화면에 무언가 표시하기 직전 단계
+
+----
+
+화면 표시
+
+6. `mounted()`
+   - Vue가 화면에 표시할 대상을 인지하고 브라우저에 지시 사항을 넘겨서 브라우저가 Vue앱이 정의한 대로 모든 컨텐츠가 있는 HTML 요소를 추가함
+7. `Mounted Vue Instance`
+   - 마운트 된 Vue 앱, 즉 마운트된 Vue 인스턴스가 완성
+8. `Data Changed `
+9. `beforeUpdate()`
+   - 앱 내에서 업데이트를 완전히 처리하지 않았을 때에 대한 단계
+   - 렌더링이 되지 않음
+10. `updated()`
+    - 해당 처리가 완료되었을 때에 대한 단계
+    - 업데이트 이후에는 변경 사항만 처리된 후 화면에 렌더링됨.
+11. Instance Unmounted 
+    - 종종 Vue가 마운트되지 않을 때가 있음
+    - 앱의 마운트가 삭제되면 화면의 모든 콘텐츠가 삭제되며 앱 사용이 불가능함
+12. `beforeUnmount()`
+    - 콘텐츠 삭제 직전에 실행되는 단계
+13. `unmounted()`
+    - 콘텐츠 삭제 후 실행되는 단계
+
+
 
 
 
