@@ -82,7 +82,7 @@ app.mount('#user-goal');
 
 
 
-
+# Section5
 
 ## Vue 내부 들여다보기
 
@@ -231,7 +231,9 @@ const app = Vue.createApp({
 
 
 
-### Vue LifeCycle
+
+
+## Vue LifeCycle1
 
 1. `createApp({....})`
 2. `beforeCreate()`
@@ -269,7 +271,7 @@ const app = Vue.createApp({
 
 
 
-## Vue LifeCycle
+## Vue LifeCycle2
 
 ```js
 const app = Vue.createApp({
@@ -306,3 +308,83 @@ const app = Vue.createApp({
   }//dom이 unmount되고난 후
 });
 ```
+
+
+
+#  Section6
+
+
+
+## Vue component
+
+- app.comonent() 선언
+- 식별자, 구성 객체 필요
+  - app.component('friend-contact') 대시기호 포함
+    - 공식 내장 HTML 요소와 충돌되는 일을 막기 위함
+  - 컴포넌트는 기본적으로 커스텀 HTML 요소이기 때문
+- 컴포넌트는 미니 Vue 앱
+
+```js
+
+app.component('friend-contact', {
+  template: `
+  <li>
+    <h2>{{ friend.name }}</h2>
+    <button @click="toggleDetails()">
+      {{ detailsAreVisible ? 'Hide' : 'Show' }} Details
+    </button>
+    <ul v-if="detailsAreVisible">
+      <li><strong>Phone:</strong> {{ friend.phone }}</li>
+      <li><strong>Email:</strong> {{ friend.email }}</li>
+    </ul>
+  </li>
+  `,
+  data() {
+    return {
+      detailsAreVisible: false,
+      friend: {
+        id: 'manuel',
+        name: 'Manuel Lorenzo',
+        phone: '01234 5678 991',
+        email: 'manuel@localhost.com',
+      },
+    };
+  },
+  methods: {
+    toggleDetails() {
+      this.detailsAreVisible = !this.detailsAreVisible;
+    },
+  },
+});
+```
+
+
+
+## 여러 Vue 앱과 여러 컴포넌트
+
+- 강의 3("*Vue의 다양한 활용 방법*")에서 배웠듯이, Vue.js를 사용하여 페이지 **일부**(여러 HTML)를 제어하거나 소위 "**싱글 페이지 애플리케이션(SPA)**"을 구축할 수 있습니다.
+
+- HTML 페이지의 여러 독립적인 부분을 제어하는 경우 **여러 Vue 앱**으로 작업하는 경우가 많습니다(예:` createApp()`를 두 번 이상 호출하여 여러 앱을 만듭니다).
+
+- 반면에 SPA를 구축하는 경우 일반적으로 **하나의 "루트 앱"**으로 작업하고(즉,` createApp()`은 전체 코드베이스에서 한 번만 사용됨) 대신 **여러 컴포넌트로 사용자 인터페이스를 구축**합니다.
+
+- 여러 Vue 앱이 있는 경우에도 컴포넌트를 사용할 수 있지만, 하나로 연결된 큰 사용자 인터페이스를 구축하는 경우 일반적으로 여러 Vue 앱을 사용하지 않습니다.
+
+왜일까요?
+
+- **Vue 앱은 서로 독립적**이므로 **서로 통신할 수 없기 때문**입니다. 통신할 수 있게 하는 비공식적인 방법이 존재할 수 있지만, 앱 간에 데이터를 공유하고 앱 B에서 문제가 발생하는 경우 앱 A에서 업데이트하는 마땅한 공식적인 방법이 없습니다.
+
+- 반면에 곧 배우게 될 **컴포넌트**는 컴포넌트 간에 데이터를 교환할 수 있는 **특정 통신 메커니즘을 제공**합니다. 따라서 여러 컴포넌트를 포함하는 하나의 루트 앱으로 작업하는 경우 하나로 연결된 UI를 구축할 수 있다는 것을
+
+- **강의 전체에서 볼 수 있습니다. 특히 강의 프로젝트에서요!**
+
+
+
+# Section7
+
+## 더 나은 개발자 경험이 필요한 이유
+
+- 수정시 새로고침
+- 새로고침시 기존에 정보들 초기화
+- vscode로 자동완성 한계
+
